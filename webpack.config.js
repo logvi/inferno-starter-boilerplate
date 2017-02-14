@@ -6,6 +6,8 @@ const HTML = require('html-webpack-plugin');
 const out = path.resolve(__dirname, 'assets');
 const jsPath = path.resolve(__dirname, 'src', 'js');
 const stylePath = path.resolve(__dirname, 'src', 'styles');
+const imgPath = path.resolve(__dirname, 'src', 'static', 'img');
+const fontsPath = path.resolve(__dirname, 'src', 'static', 'fonts');
 
 module.exports = {
     entry: {
@@ -36,6 +38,18 @@ module.exports = {
                 fallback: 'style-loader',
                 use: 'css-loader!postcss-loader!sass-loader'
             })
+        }, {
+            test: /\.png$/,
+            include: imgPath,
+            loader: 'url-loader?limit=15000&mimetype=image/png&name=img/[name].[ext]'
+        }, {
+            test: /\.jpg$/,
+            include: imgPath,
+            loader: 'file-loader?name=img/[name].[ext]'
+        }, {
+            test: /\.(otf|eot|svg|ttf|woff|woff2)$/,
+            include: fontsPath,
+            loader: 'url-loader?limit=10000&name=fonts/[name].[ext]'
         }]
     },
     plugins: [
